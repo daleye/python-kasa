@@ -6,6 +6,7 @@ from .batterysensor import BatterySensor
 from .brightness import Brightness
 from .childdevice import ChildDevice
 from .cloud import Cloud
+from .childsetup import ChildSetupModule
 from .color import Color
 from .colortemperature import ColorTemperature
 from .contactsensor import ContactSensor
@@ -33,6 +34,7 @@ __all__ = [
     "Energy",
     "DeviceModule",
     "ChildDevice",
+    "ChildSetupModule",
     "BatterySensor",
     "HumiditySensor",
     "TemperatureSensor",
