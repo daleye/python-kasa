@@ -7,14 +7,17 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from typing import TYPE_CHECKING
 
 # hen support for cpython older than 3.11 is dropped
 # async_timeout can be replaced with asyncio.timeout
 from async_timeout import timeout as asyncio_timeout
 
 from ...feature import Feature
-from ..smartdevice import SmartDevice
 from ..smartmodule import SmartModule
+
+if TYPE_CHECKING:
+    from ..smartdevice import SmartDevice
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -73,11 +76,15 @@ class ChildSetupModule(SmartModule):
     async def unpair(self, device_id: str):
         """Remove device from the hub."""
         payload = {"child_device_list": [{"device_id": device_id}]}
-        return await self._device._query_helper("remove_child_device_list", payload)
+        res = await self._device._query_helper("remove_child_device_list", payload)
+        await self._device._initialize_children()
+        return res
 
     async def add_devices(self, devices: dict):
         """Add devices."""
-        return await self._device._query_helper("add_child_device_list", devices)
+        res = await self._device._query_helper("add_child_device_list", devices)
+        await self._device._initialize_children()
+        return res
 
     async def get_detected_devices(self) -> dict:
         """Return list of devices detected during scanning."""
