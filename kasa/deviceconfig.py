@@ -26,6 +26,7 @@ class EncryptType(Enum):
     Klap = "KLAP"
     Aes = "AES"
     Xor = "XOR"
+    ClearText = "CLEAR"
 
 
 class DeviceFamilyType(Enum):
