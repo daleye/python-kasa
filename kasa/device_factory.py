@@ -7,7 +7,7 @@ import time
 from typing import Any
 
 from .aestransport import AesTransport
-from .cleartexttransport import CleartextTokenTransport
+from .cleartexttransport import CleartextTransport
 from .device import Device
 from .device_type import DeviceType
 from .deviceconfig import DeviceConfig
@@ -197,7 +197,7 @@ def get_protocol(
         "IOT.KLAP": (IotProtocol, KlapTransport),
         "SMART.AES": (SmartProtocol, AesTransport),
         "SMART.KLAP": (SmartProtocol, KlapTransportV2),
-        "SMART.CLEAR": (SmartProtocol, CleartextTokenTransport),
+        "SMART.CLEAR": (SmartProtocol, CleartextTransport),
     }
     if protocol_transport_key not in supported_device_protocols:
         return None
