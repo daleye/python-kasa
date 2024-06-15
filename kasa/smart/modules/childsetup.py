@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 _LOGGER = logging.getLogger(__name__)
 
 
-class ChildSetupModule(SmartModule):
+class ChildSetup(SmartModule):
     """Implementation for child device setup."""
 
     REQUIRED_COMPONENT = "child_quick_setup"
@@ -33,6 +33,7 @@ class ChildSetupModule(SmartModule):
         self._add_feature(
             Feature(
                 device,
+                id="pair",
                 name="Pair",
                 container=self,
                 attribute_setter="pair",
@@ -77,13 +78,13 @@ class ChildSetupModule(SmartModule):
         """Remove device from the hub."""
         payload = {"child_device_list": [{"device_id": device_id}]}
         res = await self._device._query_helper("remove_child_device_list", payload)
-        await self._device._initialize_children()
+        self._device.request_renegotiation()
         return res
 
     async def add_devices(self, devices: dict):
         """Add devices."""
         res = await self._device._query_helper("add_child_device_list", devices)
-        await self._device._initialize_children()
+        self._device.request_renegotiation()
         return res
 
     async def get_detected_devices(self) -> dict:

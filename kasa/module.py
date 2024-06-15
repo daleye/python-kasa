@@ -85,6 +85,7 @@ class Module(ABC):
     WaterleakSensor: Final[ModuleName[smart.WaterleakSensor]] = ModuleName(
         "WaterleakSensor"
     )
+    ChildSetup: Final[ModuleName[smart.ChildSetup]] = ModuleName("ChildSetup")
 
     def __init__(self, device: Device, module: str):
         self._device = device
