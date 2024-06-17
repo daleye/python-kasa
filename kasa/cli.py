@@ -1316,8 +1316,7 @@ async def child_list(dev):
 async def child_pair(dev, timeout):
     """Pair new device."""
     if (cs := dev.modules.get(Module.ChildSetup)) is None:
-        echo("%s does not support pairing." % dev)
-        return
+        error("%s does not support pairing." % dev)
 
     echo("Finding new devices for %s seconds" % timeout)
     return await cs.pair(timeout=timeout)
@@ -1329,8 +1328,7 @@ async def child_pair(dev, timeout):
 async def child_unpair(dev, device_id: str):
     """Unpair given device."""
     if (cs := dev.modules.get(Module.ChildSetup)) is None:
-        echo("%s does not support pairing." % dev)
-        return
+        error("%s does not support pairing." % dev)
 
     res = await cs.unpair(device_id=device_id)
     echo("Unpaired %s (if it was paired)" % device_id)
